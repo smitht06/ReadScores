@@ -21,10 +21,9 @@ public class ReadFile {
         System.out.println(mean(twoDMaster[0]));
         System.out.println(standardDev(mean(twoDMaster[1]),twoDMaster[1]));
         System.out.println(meanDiffSignificance(twoDMaster[2],twoDMaster[3]));
+        printTable(twoDMaster);
     }
-
-
-    private static String[] readFile(){
+    public static String[] readFile(){
         String line = "";
         BufferedReader file = null;
         String [] master = new String[125];
@@ -41,7 +40,7 @@ public class ReadFile {
         }
         return master;
     }
-    private static double mean(double[] scores){
+    public static double mean(double[] scores){
         double sum = 0;
         double mean;
         for (double score : scores) {
@@ -50,32 +49,43 @@ public class ReadFile {
         mean = sum/scores.length;
         return mean;
     }
-    private static double standardDev(double mean, double[] scores){
+    public static double standardDev(double mean, double[] scores){
         double summation = 0;
         for(double score : scores){
             summation += (score-mean) * (score-mean);
         }
         return Math.sqrt(summation/scores.length);
     }
-    private static boolean meanDiffSignificance(double[] scores1, double[] scores2){
+    public static boolean meanDiffSignificance(double[] scores1, double[] scores2){
         double m1 = mean(scores1);
         double m2 = mean(scores2);
-        double sumation1 = 0;
-        double sumation2 = 0;
+        double summation1 = 0;
+        double summation2 = 0;
         double s2 = 0;
         double t = 0;
         for(double score : scores1){
-            sumation1 += (score - m1) * (score - m1);
+            summation1 += (score - m1) * (score - m1);
         }
         for (double score : scores2){
-            sumation2 += (score - m2) * (score - m2);
+            summation2 += (score - m2) * (score - m2);
         }
-        s2 = (sumation1 + sumation2)/(scores1.length+scores2.length-2);
+        s2 = (summation1 + summation2)/(scores1.length+scores2.length-2);
         double denominator = Math.sqrt((s2/scores1.length)+(s2/scores2.length));
         t = (m1-m2)/denominator;
-        System.out.println(myDF.format(t));
-        System.out.println(t);
         return Math.abs(t) > 2.25;
     }
 
+    public static void printTable(double array[][]){
+        System.out.println("+--------+-----------+-----------+-----------+-----------+----------+");
+        System.out.println("|Student | 6/12/2013 | 6/12/2014 | 6/12/2015 | 6/12/2016 | 6/12/2017");
+        System.out.println("+========+===========+===========+===========+===========+==========+");
+        for(int j = 0; j < array[0].length; j++){
+
+            for(int i = 0; i < array.length; i++){
+                System.out.print("\t\t |"+array[i][j]);
+            }
+                System.out.print("\n");
+            }
+        System.out.println("+========+===========+===========+===========+===========+========+");
+    }
 }
