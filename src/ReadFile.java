@@ -55,8 +55,7 @@ public class ReadFile {
         for(double score : scores){
             summation += (score-mean) * (score-mean);
         }
-        double stdDeviation = Math.sqrt(summation/scores.length);
-        return stdDeviation;
+        return Math.sqrt(summation/scores.length);
     }
     private static boolean meanDiffSignificance(double[] scores1, double[] scores2){
         double m1 = mean(scores1);
@@ -71,7 +70,7 @@ public class ReadFile {
         for (double score : scores2){
             sumation2 += (score - m2) * (score - m2);
         }
-        s2 = (sumation1 + sumation2)/(scores1.length+scores2.length);
+        s2 = (sumation1 + sumation2)/(scores1.length+scores2.length-2);
         double denominator = Math.sqrt((s2/scores1.length)+(s2/scores2.length));
         t = (m1-m2)/denominator;
         System.out.println(myDF.format(t));
