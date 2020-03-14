@@ -17,6 +17,7 @@ public class ReadFile {
             System.out.println(Arrays.toString(twoDMaster[i]));
         }
         System.out.println(mean(twoDMaster[0]));
+        System.out.println(standardDev(mean(twoDMaster[0]),twoDMaster[0]));
     }
     private static String[] readFile(){
         String line = "";
@@ -38,11 +39,19 @@ public class ReadFile {
     private static double mean(double[] scores){
         double sum = 0;
         double mean;
-        for(int i = 0; i < scores.length; i++){
-            sum += scores[i];
+        for (double score : scores) {
+            sum += score;
         }
         mean = sum/scores.length;
         return mean;
+    }
+    private static double standardDev(double mean, double[] scores){
+        double summation = 0;
+        for(double score : scores){
+            summation += (score-mean) * (score-mean);
+        }
+        double stdDeviation = Math.sqrt(summation/scores.length);
+        return stdDeviation;
     }
 
 }
