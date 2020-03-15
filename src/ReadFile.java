@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -22,6 +23,7 @@ public class ReadFile {
         System.out.println(standardDev(mean(twoDMaster[1]),twoDMaster[1]));
         System.out.println(meanDiffSignificance(twoDMaster[2],twoDMaster[3]));
         printTable(twoDMaster);
+        meanDiffTable(twoDMaster);
     }
     public static String[] readFile(){
         String line = "";
@@ -82,15 +84,38 @@ public class ReadFile {
         for(int j = 0; j < array[0].length; j++){
             System.out.print("|");
             System.out.print(j+1);
-            for (double[] doubles : array) {
-                System.out.print("\t\t | " + doubles[j]);
+            for (double[] scores : array) {
+                System.out.print("\t\t | " + scores[j]);
             }
                 System.out.print("     |\n");
             }
         System.out.println("+========+===========+===========+===========+===========+==========+");
         System.out.print("|Mean   ");
-        for(int i = 0; i < array.length; i++){
-            System.out.print(" |"+myDF.format(mean(array[i]))+" \t\t");
+        for (double[] scores : array) {
+            System.out.print(" |" + myDF.format(mean(scores)) + " \t\t");
+        }
+        System.out.print("|\n");
+        System.out.print("|SD     ");
+        for (double[] scores : array){
+            System.out.print(" |" + myDF.format(standardDev(mean(scores),scores))+" \t\t");
+        }
+        System.out.print("|");
+        System.out.println();
+    }
+
+    public static void meanDiffTable(double[][] array){
+        for (int i = 0; i < array.length; i++){
+            for (int j = 0; j < array.length; j++){
+                if(j != i){
+                System.out.print(meanDiffSignificance(array[i],array[j]));
+            }else{
+                    System.out.print("n/a");
+                }
+                System.out.println();
+            }
+
         }
     }
+
+
 }
