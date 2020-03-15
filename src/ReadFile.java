@@ -61,8 +61,8 @@ public class ReadFile {
         double m2 = mean(scores2);
         double summation1 = 0;
         double summation2 = 0;
-        double s2 = 0;
-        double t = 0;
+        double s2;
+        double t;
         for(double score : scores1){
             summation1 += (score - m1) * (score - m1);
         }
@@ -75,17 +75,19 @@ public class ReadFile {
         return Math.abs(t) > 2.25;
     }
 
-    public static void printTable(double array[][]){
+    public static void printTable(double[][] array){
         System.out.println("+--------+-----------+-----------+-----------+-----------+----------+");
         System.out.println("|Student | 6/12/2013 | 6/12/2014 | 6/12/2015 | 6/12/2016 | 6/12/2017");
         System.out.println("+========+===========+===========+===========+===========+==========+");
         for(int j = 0; j < array[0].length; j++){
-
+            System.out.print("|");
+            System.out.print(j+1);
             for(int i = 0; i < array.length; i++){
-                System.out.print("\t\t |"+array[i][j]);
+                System.out.print("\t\t | " + array[i][j]);
             }
-                System.out.print("\n");
+                System.out.print("     |\n");
+
             }
-        System.out.println("+========+===========+===========+===========+===========+========+");
+        System.out.println("+========+===========+===========+===========+===========+==========+");
     }
 }
