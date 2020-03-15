@@ -3,7 +3,7 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class ReadFile {
-    private static DecimalFormat myDF = new DecimalFormat("###.###");
+    private static DecimalFormat myDF = new DecimalFormat("###.#");
     public static void main(String[] args){
         String [] master = new String[125];
         double [][] twoDMaster = new double[5][24];
@@ -82,12 +82,15 @@ public class ReadFile {
         for(int j = 0; j < array[0].length; j++){
             System.out.print("|");
             System.out.print(j+1);
-            for(int i = 0; i < array.length; i++){
-                System.out.print("\t\t | " + array[i][j]);
+            for (double[] doubles : array) {
+                System.out.print("\t\t | " + doubles[j]);
             }
                 System.out.print("     |\n");
-
             }
         System.out.println("+========+===========+===========+===========+===========+==========+");
+        System.out.print("|Mean   ");
+        for(int i = 0; i < array.length; i++){
+            System.out.print(" |"+myDF.format(mean(array[i]))+" \t\t");
+        }
     }
 }
