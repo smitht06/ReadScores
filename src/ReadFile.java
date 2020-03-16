@@ -22,7 +22,8 @@ public class ReadFile {
         System.out.println(mean(twoDMaster[0]));
         System.out.println(standardDev(mean(twoDMaster[1]),twoDMaster[1]));
         System.out.println(meanDiffSignificance(twoDMaster[2],twoDMaster[3]));
-        printTable(twoDMaster);
+        //printTable(twoDMaster);
+        System.out.println();
         meanDiffTable(twoDMaster);
     }
     public static String[] readFile(){
@@ -58,7 +59,7 @@ public class ReadFile {
         }
         return Math.sqrt(summation/scores.length);
     }
-    public static boolean meanDiffSignificance(double[] scores1, double[] scores2){
+    public static String meanDiffSignificance(double[] scores1, double[] scores2){
         double m1 = mean(scores1);
         double m2 = mean(scores2);
         double summation1 = 0;
@@ -74,7 +75,11 @@ public class ReadFile {
         s2 = (summation1 + summation2)/(scores1.length+scores2.length-2);
         double denominator = Math.sqrt((s2/scores1.length)+(s2/scores2.length));
         t = (m1-m2)/denominator;
-        return Math.abs(t) > 2.25;
+        if(Math.abs(t) > 2.25){
+            return "Y";
+        }else{
+            return "N";
+        }
     }
 
     public static void printTable(double[][] array){
@@ -104,14 +109,19 @@ public class ReadFile {
     }
 
     public static void meanDiffTable(double[][] array){
+        int year = 2013;
+        System.out.print("Date\t\t| 6/12/2013 | 6/12/2014 | 6/12/2015 | 6/12/2016 | 6/12/2017 |");
         for (int i = 0; i < array.length; i++){
+
+            System.out.print("\n6/12/"+ year+" \t");
+            year++;
             for (int j = 0; j < array.length; j++){
                 if(j != i){
-                System.out.print(meanDiffSignificance(array[i],array[j]));
+                System.out.print("| " + meanDiffSignificance(array[i],array[j]) + "\t\t\t");
             }else{
-                    System.out.print("n/a");
+                    System.out.print("| n/a\t\t");
                 }
-                System.out.println();
+
             }
 
         }
