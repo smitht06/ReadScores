@@ -1,48 +1,65 @@
-
-import java.io.*;
+/*
+ * File: ReadScores.java
+ * Author: Anthony Smith
+ * Date: 03/21/2020
+ * Course: CO 5416
+ * Purpose: This program reads scores from a file and outputs data to a table
+ * */
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Arrays;
 
-public class ReadFile {
+public class ReadScores {
+    //create decimal format for doubles
     private static DecimalFormat myDF = new DecimalFormat("###.#");
     public static void main(String[] args){
-        String [] master = new String[125];
+        //create 1d array and 2d array
+        String [] master;
         double [][] twoDMaster = new double[5][24];
+        //read file into 1d array
         master = readFile();
         int h = 4;
+        //for loop to read scores into 2d array and convert to doubles
         for(int i = 0; i < twoDMaster.length; i++){
             for (int j = 0; j < twoDMaster[0].length; j++){
                 h++;
                 twoDMaster[i][j]=Double.parseDouble(master[h]);
             }
         }
-        for (double[] doubles : twoDMaster) {
-            System.out.println(Arrays.toString(doubles));
-        }
-        System.out.println(mean(twoDMaster[0]));
-        System.out.println(standardDev(mean(twoDMaster[1]),twoDMaster[1]));
-        System.out.println(meanDiffSignificance(twoDMaster[2],twoDMaster[3]));
-        //printTable(twoDMaster);
+        //output to console
+        System.out.println("SUMMARY OF SCORES");
+        printTable(twoDMaster);
         System.out.println();
+        System.out.println("SIGNIFICANT DIFFERENCES IN MEAN SCORES");
         meanDiffTable(twoDMaster);
     }
+
+    //this method contains all necessary statement to read the file
     public static String[] readFile(){
+        //create string
         String line = "";
+        //create buffferedreader
         BufferedReader file = null;
+        //create array
         String [] master = new String[125];
         int i = 0;
+        //read file into string and then into array
         try {
-
             file = new BufferedReader(new FileReader("Scores.txt"));
             while((line = file.readLine()) != null){
                 master[i] = line;
                 i++;
             }
+            //catch IOException
         }catch(IOException e){
             System.out.println("Check file name, file not found");
         }
+        //return the information from file into and array
         return master;
     }
+
+    //this method calulates the mean of an array of doubles
     public static double mean(double[] scores){
         double sum = 0;
         double mean;
@@ -52,6 +69,8 @@ public class ReadFile {
         mean = sum/scores.length;
         return mean;
     }
+
+    //this method calculated the standard deviation in an array of doubles
     public static double standardDev(double mean, double[] scores){
         double summation = 0;
         for(double score : scores){
@@ -59,6 +78,8 @@ public class ReadFile {
         }
         return Math.sqrt(summation/scores.length);
     }
+
+    //this method does a t test on the means of two arrays of doubles
     public static String meanDiffSignificance(double[] scores1, double[] scores2){
         double m1 = mean(scores1);
         double m2 = mean(scores2);
@@ -75,6 +96,7 @@ public class ReadFile {
         s2 = (summation1 + summation2)/(scores1.length+scores2.length-2);
         double denominator = Math.sqrt((s2/scores1.length)+(s2/scores2.length));
         t = (m1-m2)/denominator;
+        //if t is more than 2.25 return Y otherwise N
         if(Math.abs(t) > 2.25){
             return "Y";
         }else{
@@ -82,6 +104,7 @@ public class ReadFile {
         }
     }
 
+    //method prints out formatted table
     public static void printTable(double[][] array){
         System.out.println("+--------+-----------+-----------+-----------+-----------+----------+");
         System.out.println("|Student | 6/12/2013 | 6/12/2014 | 6/12/2015 | 6/12/2016 | 6/12/2017");
@@ -108,6 +131,7 @@ public class ReadFile {
         System.out.println();
     }
 
+    //method prints out mean difference table
     public static void meanDiffTable(double[][] array){
         int year = 2013;
         System.out.print("Date\t\t| 6/12/2013 | 6/12/2014 | 6/12/2015 | 6/12/2016 | 6/12/2017 |");
@@ -118,6 +142,7 @@ public class ReadFile {
             for (int j = 0; j < array.length; j++){
                 if(j != i){
                 System.out.print("| " + meanDiffSignificance(array[i],array[j]) + "\t\t\t");
+
             }else{
                     System.out.print("| n/a\t\t");
                 }
