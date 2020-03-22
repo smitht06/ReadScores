@@ -2,7 +2,6 @@
  * File: ReadScores.java
  * Author: Anthony Smith
  * Date: 03/21/2020
- * Course: CO 5416
  * Purpose: This program reads scores from a file and outputs data to a table
  * */
 import java.io.BufferedReader;
